@@ -3,13 +3,51 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import {createBrowserRouter, RouterProvider} from 'react-router-dom';
+import RootLayout from './layouts/root-layout/RootLayout';
+import AuthLayout from './layouts/auth-layout/AuthLayout';
+import Login from './pages/login/login';
+import Register from './pages/register/register';
+
+
+
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <RootLayout/>,
+  },
+  {
+    path: 'auth',
+    element: <AuthLayout/>,
+    children: [
+      {
+        index: true,
+        element: <Login/>,
+      },
+      {
+        path: 'register',
+        element: <Register/>,
+      },
+      // {
+      //   path: '/forgot-password',
+      //   element: <AuthLayout/>,
+      // },
+      
+    ]
+  }
+])
+
+
+
+
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <App />
+    <RouterProvider router={router}/>
+    {/* <App /> */}
   </React.StrictMode>
 );
 
