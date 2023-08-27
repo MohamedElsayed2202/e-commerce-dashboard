@@ -22,12 +22,12 @@ const LoginForm = () => {
                     alignItems: 'center',
                     padding: '20px',
                 }}
-                
+
             >
                 <Typography component="h1" variant="h5">
                     Login
                 </Typography>
-                <Form>
+                <Form method="post">
                     <TextField
                         margin="normal"
                         required
@@ -48,7 +48,9 @@ const LoginForm = () => {
                         id="password"
                         autoComplete="current-password"
                     />
-                    <Grid container >
+                    <Grid container sx={{
+                        mt: 1
+                    }}>
                         <Grid item xs>
                             <Link to={"register"} className={classes.navlink}>
                                 Forget password?

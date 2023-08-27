@@ -5,7 +5,7 @@ import reportWebVitals from './reportWebVitals';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import RootLayout from './layouts/root-layout/RootLayout';
 import AuthLayout from './layouts/auth-layout/AuthLayout';
-import Login from './pages/login/login';
+import Login, { loginEventAction } from './pages/login/login';
 import Register from './pages/register/register';
 import ThemeContextProvider from './contexts/theme-context';
 
@@ -23,6 +23,7 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <Login />,
+        action: loginEventAction
       },
       {
         path: 'register',
