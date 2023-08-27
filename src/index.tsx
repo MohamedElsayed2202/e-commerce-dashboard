@@ -1,38 +1,38 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
-import {createBrowserRouter, RouterProvider} from 'react-router-dom';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import RootLayout from './layouts/root-layout/RootLayout';
 import AuthLayout from './layouts/auth-layout/AuthLayout';
 import Login from './pages/login/login';
 import Register from './pages/register/register';
+import ThemeContextProvider from './contexts/theme-context';
 
 
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <RootLayout/>,
+    element: <RootLayout />,
   },
   {
     path: 'auth',
-    element: <AuthLayout/>,
+    element: <AuthLayout />,
     children: [
       {
         index: true,
-        element: <Login/>,
+        element: <Login />,
       },
       {
         path: 'register',
-        element: <Register/>,
+        element: <Register />,
       },
       // {
       //   path: '/forgot-password',
       //   element: <AuthLayout/>,
       // },
-      
+
     ]
   }
 ])
@@ -46,7 +46,9 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <RouterProvider router={router}/>
+    <ThemeContextProvider>
+      <RouterProvider router={router} />
+    </ThemeContextProvider>
     {/* <App /> */}
   </React.StrictMode>
 );
