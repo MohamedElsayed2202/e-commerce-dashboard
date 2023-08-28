@@ -1,10 +1,27 @@
 import React, { ReactNode, createContext, useMemo, useState } from "react";
 import { createTheme, ThemeProvider, } from "@mui/material/styles";
 import { CssBaseline, useMediaQuery } from "@mui/material";
+import { NavLink, LinkProps as RouterLinkProps } from 'react-router-dom';
+import { LinkProps } from '@mui/material/Link';
+
+
+const CustomeNavLink = React.forwardRef<
+HTMLAnchorElement,
+Omit<RouterLinkProps, 'to'> & {href: RouterLinkProps['to']}
+>((props, ref) => {
+    const {href, ...others} = props;
+    return <NavLink {...others} to={href} ref={ref} />;
+});
+
 
 // type ThemeContextType = {
 //     toggleColorMode: () => {}
 // }
+
+
+
+
+
 export const ThemeContext = createContext({ toggleColorMode: () => { } });
 
 
@@ -96,6 +113,27 @@ const ThemeContextProvider = (props: { children: ReactNode }) => {
                         },
                     }
                 },
+                MuiLink: {
+                    defaultProps:{
+                        component: CustomeNavLink
+                    } as LinkProps
+                },
+                MuiButtonBase:{
+                    defaultProps:{
+                        LinkComponent: CustomeNavLink
+                    },
+                },
+                MuiListItemButton:{
+                    styleOverrides:{
+                        root:{
+                            '&.Mui-selected': {
+                                backgroundColor: '#0b9e61',
+                                color: '#fff'
+                            }
+                        
+                        }
+                    }
+                }
             }
         }),
         [mode]

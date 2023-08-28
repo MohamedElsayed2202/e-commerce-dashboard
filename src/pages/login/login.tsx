@@ -15,9 +15,9 @@ const Login = () => {
     return (
         <>
             {/* <Switch  onChange={themeContext.toggleColorMode}/> */}
-            {/* <IconButton sx={{ ml: 1 }} onClick={themeContext.toggleColorMode} color="inherit">
+            <IconButton sx={{ ml: 1 }} onClick={themeContext.toggleColorMode} color="inherit">
         {theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
-      </IconButton> */}
+      </IconButton>
             <Container component="main" maxWidth="sm">
                 <LoginForm />
             </Container>
