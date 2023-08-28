@@ -8,27 +8,36 @@ import AuthLayout from './layouts/auth-layout/AuthLayout';
 import Login, { loginEventAction } from './pages/login/login';
 import Register from './pages/register/register';
 import ThemeContextProvider from './contexts/theme-context';
+import PathLoader from './components/PathLoader';
 
 
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <RootLayout />,
+    element: <PathLoader><RootLayout /></PathLoader>,
+    children: [
+      {
+        // path: 'register',
+        index: true,
+        element: <Register />,
+      },
+      {
+        path: 'users',
+        element: <Register />,
+      },
+    ]
   },
   {
     path: 'auth',
-    element: <AuthLayout />,
+    element: <PathLoader><AuthLayout /></PathLoader>,
     children: [
       {
         index: true,
         element: <Login />,
         action: loginEventAction
       },
-      {
-        path: 'register',
-        element: <Register />,
-      },
+      
       // {
       //   path: '/forgot-password',
       //   element: <AuthLayout/>,
@@ -47,7 +56,7 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <ThemeContextProvider>
+    <ThemeContextProvider> 
       <RouterProvider router={router} />
     </ThemeContextProvider>
     {/* <App /> */}

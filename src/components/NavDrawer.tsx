@@ -1,5 +1,6 @@
 import { Divider, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Toolbar } from "@mui/material"
-import { Category, DashboardCustomize, Inbox, Mail, PeopleAlt, ShoppingBag, ShoppingCart } from '@mui/icons-material';
+import { Category, DashboardCustomize, PeopleAlt, ShoppingBag, ShoppingCart } from '@mui/icons-material';
+import { memo, useCallback, useState } from "react";
 
 
 const navLinks = [
@@ -7,45 +8,46 @@ const navLinks = [
         id: 1,
         icon: <DashboardCustomize />,
         title: "Dashboard",
-        path: "/dashboard"
+        // path: "/dashboard"
+        path: "/"
     },
     {
         id: 2,
         icon: <PeopleAlt />,
         title: "Users",
-        path: "/users"
+        path: "users"
     },
     {
         id: 3,
         icon: <DashboardCustomize />,
         title: "Brands",
-        path: "/brands"
+        path: "brands"
     },
     {
         id: 4,
         icon: <Category />,
         title: "Categories",
-        path: "/categories"
+        path: "categories"
     },
     {
         id: 5,
         icon: <ShoppingBag />,
         title: "Products",
-        path: "/products"
+        path: "products"
     },
     {
         id: 6,
         icon: <ShoppingCart />,
         title: "Orders",
-        path: "/orders"
+        path: "orders"
     }
 ];
 
-
-
-
 const NavDrawer = () => {
-    const id = 1;
+    const [selectedId, setSelectedId] = useState<number>(1);
+    const handleListItemClick = useCallback((id: number) => {
+        setSelectedId(id);
+      },[setSelectedId]);
     return (
         <>
             <Toolbar />
@@ -54,12 +56,13 @@ const NavDrawer = () => {
                 {navLinks.map((item) => (
                     <ListItem key={item.id} disablePadding >
                         <ListItemButton href={item.path} 
-                        selected= {id === item.id} >
+                        selected= {selectedId === item.id} 
+                        onClick={() => handleListItemClick(item.id)}
+                        >
                             <ListItemIcon>
                                 {item.icon}
                             </ListItemIcon>
-                            <ListItemText primary={item.title}> 
-                                {/* <NavLink to={item.path}></NavLink> */}
+                            <ListItemText primary={item.title}>
                             </ListItemText>
                         </ListItemButton>
                     </ListItem>
@@ -69,4 +72,4 @@ const NavDrawer = () => {
     )
 }
 
-export default NavDrawer
+export default memo(NavDrawer)
