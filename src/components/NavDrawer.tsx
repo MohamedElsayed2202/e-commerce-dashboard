@@ -1,6 +1,7 @@
 import { Divider, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Toolbar } from "@mui/material"
 import { Category, DashboardCustomize, PeopleAlt, ShoppingBag, ShoppingCart } from '@mui/icons-material';
-import { memo, useCallback, useState } from "react";
+import { memo, useCallback, useEffect, useState } from "react";
+import { useLocation } from "react-router";
 
 
 const navLinks = [
@@ -45,9 +46,18 @@ const navLinks = [
 
 const NavDrawer = () => {
     const [selectedId, setSelectedId] = useState<number>(1);
-    const handleListItemClick = useCallback((id: number) => {
-        setSelectedId(id);
-      },[setSelectedId]);
+    const location = useLocation();
+
+    useEffect(()=>{
+        let path = location.pathname.split('/')[1] 
+        if(path === "") path = '/'
+        console.log(path);
+        setSelectedId((navLinks.findIndex(link => link.path === path)) + 1)
+    }, [location])
+
+    // const handleListItemClick = useCallback((id: number) => {
+    //     setSelectedId(id);
+    //   },[setSelectedId]);
     return (
         <>
             <Toolbar />
@@ -57,7 +67,7 @@ const NavDrawer = () => {
                     <ListItem key={item.id} disablePadding >
                         <ListItemButton href={item.path} 
                         selected= {selectedId === item.id} 
-                        onClick={() => handleListItemClick(item.id)}
+                        // onClick={() => handleListItemClick(item.id)}
                         >
                             <ListItemIcon>
                                 {item.icon}

@@ -1,7 +1,11 @@
 import { Box, Button, Grid, Paper, TextField, Typography } from "@mui/material"
-import { Form, Link } from "react-router-dom"
+import { Form, Link, useActionData } from "react-router-dom"
 import classes from '../pages/login/login.module.css'
+import { memo } from "react";
 const LoginForm = () => {
+    const data:any = useActionData();
+    console.log((data && 'password' in data.data.errors));
+    
     return (
         <Box
             sx={{
@@ -29,6 +33,7 @@ const LoginForm = () => {
                 </Typography>
                 <Form method="post">
                     <TextField
+                        error={data && 'email' in data.data.errors}
                         margin="normal"
                         required
                         fullWidth
@@ -37,8 +42,11 @@ const LoginForm = () => {
                         name="email"
                         autoComplete="email"
                         autoFocus
+                        helperText = {data && data.data.errors.email}
                     />
                     <TextField
+                        error={data && 'password' in data.data.errors}
+
                         margin="normal"
                         required
                         fullWidth
@@ -47,6 +55,7 @@ const LoginForm = () => {
                         type="password"
                         id="password"
                         autoComplete="current-password"
+                        helperText = {data && data.data.errors.password}
                     />
                     <Grid container sx={{
                         mt: 1
@@ -70,4 +79,4 @@ const LoginForm = () => {
     )
 }
 
-export default LoginForm
+export default memo(LoginForm);

@@ -30,8 +30,8 @@ export async function loginEventAction({ request, params }: { request: Request, 
 
         console.log(res);
     } catch (error: any) {
-        console.log(error.response);
-
+        // console.log(error.response);
+        return error.response
     }
 
 }
