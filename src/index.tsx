@@ -9,13 +9,18 @@ import Login, { loginEventAction } from './pages/login/login';
 import Register from './pages/register/register';
 import ThemeContextProvider from './contexts/theme-context';
 import PathLoader from './components/PathLoader';
+import NProgress from "nprogress";
+import { Provider } from 'react-redux';
+import { store } from './store/store';
 
+store.getState().auth.token
 
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <PathLoader><RootLayout /></PathLoader>,
+    // element: <RootLayout />,
     children: [
       {
         // path: 'register',
@@ -25,6 +30,15 @@ const router = createBrowserRouter([
       {
         path: 'users',
         element: <Register />,
+        loader: async () => {
+          // NProgress.start();
+          const fakeapicall = new Promise((resolve, reject) => {
+            setTimeout(resolve, 5000)
+          });
+          await fakeapicall
+          // NProgress.done()
+          return null
+        }
       },
     ]
   },
@@ -37,7 +51,7 @@ const router = createBrowserRouter([
         element: <Login />,
         action: loginEventAction
       },
-      
+
       // {
       //   path: '/forgot-password',
       //   element: <AuthLayout/>,
@@ -56,10 +70,12 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <ThemeContextProvider> 
-      <RouterProvider router={router} />
-    </ThemeContextProvider>
-    {/* <App /> */}
+    <Provider store={store}>
+      <ThemeContextProvider>
+        <RouterProvider router={router} />
+      </ThemeContextProvider>
+      {/* <App /> */}
+    </Provider>
   </React.StrictMode>
 );
 

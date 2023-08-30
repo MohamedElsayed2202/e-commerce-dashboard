@@ -12,3 +12,25 @@ export interface ILogedInUser{
         }
     }
 }
+
+export interface LoginRequest{
+    email: string;
+    password: string;
+}
+
+export interface LoginResponse{
+    token: string;
+    userId: string;
+    role: string;
+}
+
+export interface LoginInputError{
+    error: boolean,
+    message: string,
+}
+
+export interface Auth{
+    token: string | null | undefined;
+    id: string | null | undefined;
+    role: string | null | undefined;
+}

@@ -1,10 +1,56 @@
 import { Box, Button, Grid, Paper, TextField, Typography } from "@mui/material"
-import { Form, Link, useActionData } from "react-router-dom"
+import { Form, Link, useActionData, useNavigation } from "react-router-dom"
 import classes from '../pages/login/login.module.css'
-import { memo } from "react";
+import { memo, useEffect, useState } from "react";
+import { LoginInputError } from "../interfaces/interfaces";
+import {LoadingButton} from "@mui/lab";
 const LoginForm = () => {
     const data:any = useActionData();
-    console.log((data && 'password' in data.data.errors));
+    const {state} = useNavigation();
+    const [emailError, setEmailError] = useState<LoginInputError>({
+        error: false,
+        message: ""
+    });
+    const [passwordError, setPasswordError] = useState<LoginInputError>({
+        error: false,
+        message: ""
+    });
+    useEffect(()=>{
+        console.log(typeof data);
+        
+        if(data && 'data' in data){
+            console.log(data);
+            const errors = data.data.errors;
+            if('email' in errors){
+                setEmailError({
+                    error: true,
+                    message: errors.email
+                })
+            }
+            if('password' in errors){
+                setPasswordError({
+                    error: true,
+                    message: errors.password
+                })
+            }
+        }
+    },[data]);
+
+    const inputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const name = event.target.name;
+        if(name === 'email'){
+            setEmailError({
+                error: false,
+                message: ""
+            })
+        }
+        if(name === 'password'){
+            setPasswordError({
+                error: false,
+                message: ""
+            })
+        }
+    }
     
     return (
         <Box
@@ -25,6 +71,7 @@ const LoginForm = () => {
                     justifyContent: 'center',
                     alignItems: 'center',
                     padding: '20px',
+                    borderRadius: '10px',
                 }}
 
             >
@@ -33,7 +80,7 @@ const LoginForm = () => {
                 </Typography>
                 <Form method="post">
                     <TextField
-                        error={data && 'email' in data.data.errors}
+                        error={emailError.error}
                         margin="normal"
                         required
                         fullWidth
@@ -42,10 +89,11 @@ const LoginForm = () => {
                         name="email"
                         autoComplete="email"
                         autoFocus
-                        helperText = {data && data.data.errors.email}
+                        helperText= {emailError.message}
+                        onInput={inputChange}
                     />
                     <TextField
-                        error={data && 'password' in data.data.errors}
+                        error={passwordError.error}
 
                         margin="normal"
                         required
@@ -55,7 +103,8 @@ const LoginForm = () => {
                         type="password"
                         id="password"
                         autoComplete="current-password"
-                        helperText = {data && data.data.errors.password}
+                        helperText = {passwordError.message}
+                        onInput={inputChange}
                     />
                     <Grid container sx={{
                         mt: 1
@@ -66,13 +115,22 @@ const LoginForm = () => {
                             </Link>
                         </Grid>
                     </Grid>
-                    <Button
+                    <LoadingButton 
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    sx={{ mt: 3, mb: 2 }}
+                    loading = {state === 'submitting' ? true : false}
+                    >
+                        <span>Login</span>
+                    </LoadingButton>
+                    {/* <Button
                         type="submit"
                         fullWidth
                         variant="contained"
                         sx={{ mt: 3, mb: 2 }} >
                         Login
-                    </Button>
+                    </Button> */}
                 </Form>
             </Paper>
         </Box>

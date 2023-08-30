@@ -1,7 +1,8 @@
 import { ReactNode, memo, useEffect, useState } from "react";
-import { useLocation } from "react-router";
+import { useLocation, useNavigation } from "react-router-dom";
 import NProgress from "nprogress";
 const PathLoader = (props: { children: ReactNode }) => {
+    const {} = useNavigation();
     NProgress.configure({showSpinner: false});
     const [prevLoc, setPrevLoc] = useState('');
     const location = useLocation();
