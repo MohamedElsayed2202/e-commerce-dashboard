@@ -1,12 +1,8 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { ILogedInUser, LoginRequest, LoginResponse } from "../../../interfaces/interfaces";
+import { Account, LoginRequest, LoginResponse } from "../../../interfaces/interfaces";
 import { apiSlice } from "../../api/apiSlice";
 
 
 export const authApiSlice = apiSlice.injectEndpoints({
-
-
-    // addTagTypes: ['Auth'],
     endpoints: builder => ({
         login: builder.mutation<LoginResponse, LoginRequest>({
             query: (credentials) => ({
@@ -17,6 +13,12 @@ export const authApiSlice = apiSlice.injectEndpoints({
                     'Content-Type': 'application/json',
                 },
             })
+        }),
+        getUserProfile: builder.query<Account, void>({
+            query: () => 'auth/user-profile',
+            transformResponse: (response: {user: Account}, meta, arg) => response.user,
+            // transformErrorResponse: (response, meta, arg) => 'Couldent fetch your profile',
+            providesTags: (result, error, arg) => [{type: 'Auth'}] 
         })
     })
 })

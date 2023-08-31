@@ -1,5 +1,6 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { Auth } from "../../../interfaces/interfaces";
+import { Account, Auth } from "../../../interfaces/interfaces";
+import { RootState } from "../../store";
 
 // type AuthType = {
 //     token: string | null,
@@ -7,6 +8,7 @@ import { Auth } from "../../../interfaces/interfaces";
 // }
 
 const initialState: Auth = {
+    user: null,
     token: localStorage.getItem('token'),
     id: localStorage.getItem('id'),
     role: localStorage.getItem('role'),
@@ -23,13 +25,19 @@ const slice = createSlice({
             localStorage.setItem('token', token);
             localStorage.setItem('id', id);
             localStorage.setItem('role', role);
+        },
+        setProfile: (state, {payload}: PayloadAction<Account>) => {
+            state.user = payload;
+        },
+        logout: (state) => {
+            state.user = null;
+            state.token = null;
+            state.id = null;
+            state.role = null;
         }
     }
 }) 
 
-export const { setCredentials } = slice.actions
-
-const authReducer = slice.reducer
-export default authReducer
-
-// export const selectCurrentUser = (state: RootState) => state.auth.user
+export const { setCredentials, setProfile, logout } = slice.actions;
+const authReducer = slice.reducer;
+export default authReducer;

@@ -11,15 +11,20 @@ import NavDrawer from "../../components/NavDrawer";
 import CustomeBreadcrumb from "../../components/CustomeBreadcrumb";
 import DarkModeSwapper from "../../components/DarkModeSwapper";
 import DrawerToggle from "../../components/DrawerToggle";
+import { useAppSelector } from "../../hooks/hooks";
 
 const drawerWidth = 240;
 
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 const RootLayout = () => {
+    const user = useAppSelector(state => state.auth);
+    console.log(user);
+    
     const [mobileOpen, setMobileOpen] = useState<boolean>(false);
     const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
-
+    console.log('666666666666', anchorElUser);
+    
     const handleDrawerToggle = useCallback(() => {
         setMobileOpen(prev => !prev);
     },[]);

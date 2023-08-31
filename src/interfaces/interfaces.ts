@@ -1,5 +1,4 @@
-export interface ILogedInUser{
-    id: string;
+export interface Account{
     name: string;
     email: string;
     role: string;
@@ -20,7 +19,7 @@ export interface LoginRequest{
 
 export interface LoginResponse{
     token: string;
-    userId: string;
+    id: string;
     role: string;
 }
 
@@ -30,7 +29,13 @@ export interface LoginInputError{
 }
 
 export interface Auth{
+    user: Account | null;
     token: string | null | undefined;
     id: string | null | undefined;
     role: string | null | undefined;
+}
+
+export interface Appbar {
+    mobileOpen: boolean;
+    anchorElUser: HTMLElement | null;
 }

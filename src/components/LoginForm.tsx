@@ -124,13 +124,6 @@ const LoginForm = () => {
                     >
                         <span>Login</span>
                     </LoadingButton>
-                    {/* <Button
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        sx={{ mt: 3, mb: 2 }} >
-                        Login
-                    </Button> */}
                 </Form>
             </Paper>
         </Box>

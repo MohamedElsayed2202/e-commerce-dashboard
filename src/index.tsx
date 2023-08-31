@@ -5,21 +5,22 @@ import reportWebVitals from './reportWebVitals';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import RootLayout from './layouts/root-layout/RootLayout';
 import AuthLayout from './layouts/auth-layout/AuthLayout';
-import Login, { loginEventAction } from './pages/login/login';
+import Login from './pages/login/login';
 import Register from './pages/register/register';
 import ThemeContextProvider from './contexts/theme-context';
 import PathLoader from './components/PathLoader';
 import NProgress from "nprogress";
 import { Provider } from 'react-redux';
 import { store } from './store/store';
-
-store.getState().auth.token
+import { loginAction } from './utils/actions';
+import { indexLoader } from './utils/loaders';
 
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <PathLoader><RootLayout /></PathLoader>,
+    loader: indexLoader,
     // element: <RootLayout />,
     children: [
       {
@@ -38,7 +39,7 @@ const router = createBrowserRouter([
           await fakeapicall
           // NProgress.done()
           return null
-        }
+        } 
       },
     ]
   },
@@ -49,7 +50,7 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <Login />,
-        action: loginEventAction
+        action: loginAction
       },
 
       // {
