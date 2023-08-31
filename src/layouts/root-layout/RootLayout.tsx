@@ -2,40 +2,26 @@ import { Outlet } from "react-router-dom"
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
-import IconButton from '@mui/material/IconButton';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import { memo, useCallback, useState } from "react";
-import { Avatar, Hidden, Menu, MenuItem, Tooltip, } from "@mui/material";
+import { memo, useCallback } from "react";
+import { Hidden } from "@mui/material";
 import NavDrawer from "../../components/NavDrawer";
 import CustomeBreadcrumb from "../../components/CustomeBreadcrumb";
 import DarkModeSwapper from "../../components/DarkModeSwapper";
 import DrawerToggle from "../../components/DrawerToggle";
-import { useAppSelector } from "../../hooks/hooks";
+import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
+import MenuAppbar from "../../components/MenuAppbar";
+import { toggleDrawer } from "../../store/slices/appbar-slice";
 
 const drawerWidth = 240;
 
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
-
 const RootLayout = () => {
-    const user = useAppSelector(state => state.auth);
-    console.log(user);
-    
-    const [mobileOpen, setMobileOpen] = useState<boolean>(false);
-    const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
-    console.log('666666666666', anchorElUser);
-    
+    const appbar = useAppSelector(state => state.appbar);
+    const dispatch = useAppDispatch();
     const handleDrawerToggle = useCallback(() => {
-        setMobileOpen(prev => !prev);
-    },[]);
-
-    const handleOpenMenu = useCallback((event: React.MouseEvent<HTMLElement>) => {
-        setAnchorElUser(event.currentTarget);
-    },[]);
-
-    const handleCloseMenu = useCallback(() => {
-        setAnchorElUser(null);
-    },[]);
+        dispatch(toggleDrawer());
+    },[dispatch]);
 
     return (
             <Box sx={{ display: 'flex' }}>
@@ -47,7 +33,7 @@ const RootLayout = () => {
                     }}
                 >
                     <Toolbar >
-                        <DrawerToggle handleDrawerToggle={handleDrawerToggle} isOpen={mobileOpen} />
+                        <DrawerToggle />
                         <Typography variant="h6" noWrap component="div" sx={{
                             display: { xs: 'flex' },
                             flexGrow: 1
@@ -55,35 +41,7 @@ const RootLayout = () => {
                             Shoes House
                         </Typography>
                         <DarkModeSwapper />
-                        <Box sx={{ flexGrow: 0 }}>
-                            <Tooltip title="Open settings">
-                                <IconButton onClick={handleOpenMenu} sx={{ p: 0 }}>
-                                    <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-                                </IconButton>
-                            </Tooltip>
-                            <Menu
-                                sx={{ mt: '45px' }}
-                                id="menu-appbar"
-                                anchorEl={anchorElUser}
-                                anchorOrigin={{
-                                    vertical: 'top',
-                                    horizontal: 'right',
-                                }}
-                                keepMounted
-                                transformOrigin={{
-                                    vertical: 'top',
-                                    horizontal: 'right',
-                                }}
-                                open={Boolean(anchorElUser)}
-                                onClose={handleCloseMenu}
-                            >
-                                {settings.map((setting) => (
-                                    <MenuItem key={setting} onClick={handleCloseMenu}>
-                                        <Typography textAlign="center">{setting}</Typography>
-                                    </MenuItem>
-                                ))}
-                            </Menu>
-                        </Box>
+                        <MenuAppbar />
                     </Toolbar>
                 </AppBar>
                 <Box
@@ -94,7 +52,7 @@ const RootLayout = () => {
                     <Hidden smUp implementation="js">
                         <Drawer
                             variant="temporary"
-                            open={mobileOpen}
+                            open={appbar.mobileOpen}
                             onClose={handleDrawerToggle}
                             ModalProps={{
                                 keepMounted: true,

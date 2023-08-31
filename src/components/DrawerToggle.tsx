@@ -1,9 +1,16 @@
 import { IconButton } from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
-import { memo } from "react";
+import { memo, useCallback } from "react";
+import { useAppDispatch, useAppSelector } from "../hooks/hooks";
+import { toggleDrawer } from "../store/slices/appbar-slice";
 
-const DrawerToggle = ({ handleDrawerToggle, isOpen }:{handleDrawerToggle(): void, isOpen:boolean }) => {
+const DrawerToggle = () => {
+    const appbar = useAppSelector(state => state.appbar);
+    const dispatch = useAppDispatch();
+    const handleDrawerToggle = useCallback(() => {
+        dispatch(toggleDrawer());
+    },[dispatch]);
     return (
         <IconButton
             color="inherit"
@@ -12,7 +19,7 @@ const DrawerToggle = ({ handleDrawerToggle, isOpen }:{handleDrawerToggle(): void
             onClick={handleDrawerToggle}
             sx={{ mr: 2, display: { sm: 'none' } }}
         >
-            {isOpen ? <CloseIcon /> : <MenuIcon />}
+            {appbar.mobileOpen ? <CloseIcon /> : <MenuIcon />}
         </IconButton>
     )
 }

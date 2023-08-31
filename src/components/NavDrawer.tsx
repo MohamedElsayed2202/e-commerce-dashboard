@@ -2,6 +2,8 @@ import { Divider, List, ListItem, ListItemButton, ListItemIcon, ListItemText, To
 import { Category, DashboardCustomize, PeopleAlt, ShoppingBag, ShoppingCart } from '@mui/icons-material';
 import { memo, useCallback, useEffect, useState } from "react";
 import { useLocation } from "react-router";
+import { useAppDispatch, useAppSelector } from "../hooks/hooks";
+import { toggleDrawer } from "../store/slices/appbar-slice";
 
 
 const navLinks = [
@@ -48,16 +50,18 @@ const NavDrawer = () => {
     const [selectedId, setSelectedId] = useState<number>(1);
     const location = useLocation();
 
+    const appbar = useAppSelector(state => state.appbar);
+    const dispatch = useAppDispatch();
+    const handleDrawerToggle = useCallback(() => {
+        if(appbar.mobileOpen)
+            dispatch(toggleDrawer());
+    },[dispatch, appbar.mobileOpen]);
+
     useEffect(()=>{
         let path = location.pathname.split('/')[1] 
         if(path === "") path = '/'
-        console.log(path);
         setSelectedId((navLinks.findIndex(link => link.path === path)) + 1)
     }, [location])
-
-    // const handleListItemClick = useCallback((id: number) => {
-    //     setSelectedId(id);
-    //   },[setSelectedId]);
     return (
         <>
             <Toolbar />
@@ -67,7 +71,7 @@ const NavDrawer = () => {
                     <ListItem key={item.id} disablePadding >
                         <ListItemButton href={item.path} 
                         selected= {selectedId === item.id} 
-                        // onClick={() => handleListItemClick(item.id)}
+                        onClick={handleDrawerToggle}
                         >
                             <ListItemIcon>
                                 {item.icon}

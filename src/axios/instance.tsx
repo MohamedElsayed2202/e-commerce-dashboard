@@ -5,11 +5,5 @@ const axiosInstance = axios.create({
     // withCredentials: true,
 })
 
-// axiosInstance.interceptors.response.use(res => res, error => {
-//     console.log(error.response.data);
-//     console.log(error.response.status);
-//     console.log(error.response);
-    
-// })
 
 export default axiosInstance;

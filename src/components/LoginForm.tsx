@@ -1,9 +1,11 @@
-import { Box, Button, Grid, Paper, TextField, Typography } from "@mui/material"
+import { Box, Grid, Paper, TextField, Typography } from "@mui/material"
 import { Form, Link, useActionData, useNavigation } from "react-router-dom"
 import classes from '../pages/login/login.module.css'
 import { memo, useEffect, useState } from "react";
 import { LoginInputError } from "../interfaces/interfaces";
 import {LoadingButton} from "@mui/lab";
+
+
 const LoginForm = () => {
     const data:any = useActionData();
     const {state} = useNavigation();
@@ -15,11 +17,8 @@ const LoginForm = () => {
         error: false,
         message: ""
     });
-    useEffect(()=>{
-        console.log(typeof data);
-        
+    useEffect(()=>{       
         if(data && 'data' in data){
-            console.log(data);
             const errors = data.data.errors;
             if('email' in errors){
                 setEmailError({

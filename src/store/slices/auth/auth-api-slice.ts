@@ -19,6 +19,12 @@ export const authApiSlice = apiSlice.injectEndpoints({
             transformResponse: (response: {user: Account}, meta, arg) => response.user,
             // transformErrorResponse: (response, meta, arg) => 'Couldent fetch your profile',
             providesTags: (result, error, arg) => [{type: 'Auth'}] 
+        }),
+        logout: builder.mutation<void, void>({
+            query: () => ({
+                url: 'auth/logout',
+                method: 'POST'
+            })
         })
     })
 })

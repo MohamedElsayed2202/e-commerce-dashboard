@@ -6,18 +6,19 @@ import { Appbar } from "../../interfaces/interfaces";
 
 const initialState: Appbar = {
     mobileOpen: false,
-    anchorElUser: null,
 }
 
 const slice = createSlice({
     name: "appbar",
     initialState,
     reducers: {
-        toggleDrawer: (state, action) => {
+        toggleDrawer: (state, {payload}: PayloadAction<void>) => {
             state.mobileOpen = !state.mobileOpen;
         },
-        openMenu: (state, {payload}: PayloadAction<HTMLElement>) => {
-            state.anchorElUser 
-        }
     }
 })
+
+export const { toggleDrawer } = slice.actions;
+
+const appbarReducer = slice.reducer;
+export default appbarReducer;

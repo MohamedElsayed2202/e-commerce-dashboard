@@ -9,10 +9,9 @@ import Login from './pages/login/login';
 import Register from './pages/register/register';
 import ThemeContextProvider from './contexts/theme-context';
 import PathLoader from './components/PathLoader';
-import NProgress from "nprogress";
 import { Provider } from 'react-redux';
 import { store } from './store/store';
-import { loginAction } from './utils/actions';
+import { loginAction, logoutAction } from './utils/actions';
 import { indexLoader } from './utils/loaders';
 
 
@@ -52,7 +51,10 @@ const router = createBrowserRouter([
         element: <Login />,
         action: loginAction
       },
-
+      {
+        path: 'logout',
+        action: logoutAction
+      }
       // {
       //   path: '/forgot-password',
       //   element: <AuthLayout/>,

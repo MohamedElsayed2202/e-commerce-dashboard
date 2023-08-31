@@ -19,8 +19,6 @@ export interface LoginRequest{
 
 export interface LoginResponse{
     token: string;
-    id: string;
-    role: string;
 }
 
 export interface LoginInputError{
@@ -31,11 +29,8 @@ export interface LoginInputError{
 export interface Auth{
     user: Account | null;
     token: string | null | undefined;
-    id: string | null | undefined;
-    role: string | null | undefined;
 }
 
 export interface Appbar {
     mobileOpen: boolean;
-    anchorElUser: HTMLElement | null;
 }
