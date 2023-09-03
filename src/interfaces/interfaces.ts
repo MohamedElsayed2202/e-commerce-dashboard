@@ -12,6 +12,17 @@ export interface Account{
     }
 }
 
+export interface User{
+    name: string;
+    email: string;
+    profile: {
+        phone: string;
+        image:{
+            url: string
+        }
+    }
+}
+
 export interface LoginRequest{
     email: string;
     password: string;
@@ -33,4 +44,12 @@ export interface Auth{
 
 export interface Appbar {
     mobileOpen: boolean;
+}
+
+export interface ErrorResponse {
+    status: number | any;
+    data: {
+        message: string,
+        data?: any
+    }
 }

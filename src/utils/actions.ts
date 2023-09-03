@@ -21,11 +21,8 @@ export async function loginAction({ request, params }: { request: Request, param
     }  
 }
 
-// { request, params }: { request: Request, params: Params }
 export async function logoutAction() {
-    try{
-        console.log(3333333);
-        
+    try{        
         await store
        .dispatch(authApiSlice.endpoints.logout.initiate())
        .unwrap();

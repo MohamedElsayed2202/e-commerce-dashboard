@@ -12,7 +12,8 @@ import PathLoader from './components/PathLoader';
 import { Provider } from 'react-redux';
 import { store } from './store/store';
 import { loginAction, logoutAction } from './utils/actions';
-import { indexLoader } from './utils/loaders';
+import { indexLoader, usersLoader } from './utils/loaders';
+import Users from './pages/users/users';
 
 
 const router = createBrowserRouter([
@@ -29,16 +30,17 @@ const router = createBrowserRouter([
       },
       {
         path: 'users',
-        element: <Register />,
-        loader: async () => {
-          // NProgress.start();
-          const fakeapicall = new Promise((resolve, reject) => {
-            setTimeout(resolve, 5000)
-          });
-          await fakeapicall
-          // NProgress.done()
-          return null
-        } 
+        element: <Users />,
+        loader: usersLoader
+        // loader: async () => {
+        //   // NProgress.start();
+        //   const fakeapicall = new Promise((resolve, reject) => {
+        //     setTimeout(resolve, 5000)
+        //   });
+        //   await fakeapicall
+        //   // NProgress.done()
+        //   return null
+        // } 
       },
     ]
   },

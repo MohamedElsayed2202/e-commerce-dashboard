@@ -18,7 +18,12 @@ const CustomeBreadcrumb = () => {
         setLinks(links);
     }, [location]);
     return (
-        <Breadcrumbs aria-label="breadcrumb">
+        <Breadcrumbs aria-label="breadcrumb" 
+        sx={{
+            fontSize: { xs: '1rem', sm: '1.5rem' },
+            p: 2
+        }}
+        >
             {links.map((link, index) => (
                 <Link key={index} href={link.path}>
                     {link.name}
