@@ -31,7 +31,15 @@ const router = createBrowserRouter([
       {
         path: 'users',
         element: <Users />,
-        loader: usersLoader
+        loader: usersLoader,
+        children: [
+          {path: 'add', action: async({request, params}) => {
+            const formdata = await request.formData();
+            console.log(formdata.get('name'));
+            
+            return null
+          }}
+        ]
         // loader: async () => {
         //   // NProgress.start();
         //   const fakeapicall = new Promise((resolve, reject) => {

@@ -6,12 +6,12 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { memo, useCallback } from "react";
 import { Hidden } from "@mui/material";
-import NavDrawer from "../../components/NavDrawer";
-import CustomeBreadcrumb from "../../components/CustomeBreadcrumb";
-import DarkModeSwapper from "../../components/DarkModeSwapper";
-import DrawerToggle from "../../components/DrawerToggle";
+import NavDrawer from "../../components/layout-components/NavDrawer";
+import CustomeBreadcrumb from "../../components/layout-components/CustomeBreadcrumb";
+import DarkModeSwapper from "../../components/layout-components/DarkModeSwapper";
+import DrawerToggle from "../../components/layout-components/DrawerToggle";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
-import MenuAppbar from "../../components/MenuAppbar";
+import MenuAppbar from "../../components/layout-components/MenuAppbar";
 import { toggleDrawer } from "../../store/slices/appbar-slice";
 
 const drawerWidth = 240;

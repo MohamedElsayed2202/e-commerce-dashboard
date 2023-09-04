@@ -2,8 +2,8 @@ import { IconButton } from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
 import { memo, useCallback } from "react";
-import { useAppDispatch, useAppSelector } from "../hooks/hooks";
-import { toggleDrawer } from "../store/slices/appbar-slice";
+import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
+import { toggleDrawer } from "../../store/slices/appbar-slice";
 
 const DrawerToggle = () => {
     const appbar = useAppSelector(state => state.appbar);

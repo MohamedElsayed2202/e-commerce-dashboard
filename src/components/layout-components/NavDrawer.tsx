@@ -2,8 +2,8 @@ import { Divider, List, ListItem, ListItemButton, ListItemIcon, ListItemText, To
 import { Category, DashboardCustomize, PeopleAlt, ShoppingBag, ShoppingCart } from '@mui/icons-material';
 import { memo, useCallback, useEffect, useState } from "react";
 import { useLocation } from "react-router";
-import { useAppDispatch, useAppSelector } from "../hooks/hooks";
-import { toggleDrawer } from "../store/slices/appbar-slice";
+import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
+import { toggleDrawer } from "../../store/slices/appbar-slice";
 
 
 const navLinks = [

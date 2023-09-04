@@ -1,8 +1,8 @@
 import { Box, Grid, Paper, TextField, Typography } from "@mui/material"
 import { Form, Link, useActionData, useNavigation } from "react-router-dom"
-import classes from '../pages/login/login.module.css'
+import classes from '../../pages/login/login.module.css'
 import { memo, useEffect, useState } from "react";
-import { LoginInputError } from "../interfaces/interfaces";
+import { LoginInputError } from "../../interfaces/interfaces";
 import {LoadingButton} from "@mui/lab";
 
 
