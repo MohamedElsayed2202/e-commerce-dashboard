@@ -2,9 +2,16 @@ import { Box, Button } from "@mui/material"
 import { useGetUsersQuery } from "../../store/slices/users/user-api-slice"
 import { memo } from "react"
 import MyModal from "../../components/modals/modal";
+import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
+import { toggleFormModalOpen } from "../../store/slices/app/forms-slice";
 
 const Users = () => {
     const { data } = useGetUsersQuery();
+
+    const {isOpen} = useAppSelector(state => state.modalForm);
+
+    const dispatch = useAppDispatch();
+
     return (
         <Box
             component="section"
@@ -28,9 +35,12 @@ const Users = () => {
                     <Button variant="contained">Add User</Button>
                 </Box>
             }
-            {
+                <Button variant="contained" onClick={() => {
+                    dispatch(toggleFormModalOpen())
+                }}>Add User</Button>
+                
                 <MyModal/>
-            }
+            
         </Box>
     )
 }

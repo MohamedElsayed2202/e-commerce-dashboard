@@ -3,7 +3,7 @@ import { Category, DashboardCustomize, PeopleAlt, ShoppingBag, ShoppingCart } fr
 import { memo, useCallback, useEffect, useState } from "react";
 import { useLocation } from "react-router";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
-import { toggleDrawer } from "../../store/slices/appbar-slice";
+import { toggleDrawer } from "../../store/slices/app/appbar-slice";
 
 
 const navLinks = [

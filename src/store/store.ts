@@ -1,15 +1,17 @@
-import {configureStore} from '@reduxjs/toolkit'
+import { configureStore } from '@reduxjs/toolkit'
 import { apiSlice } from './api/apiSlice';
 import authReducer from './slices/auth/auth-slice';
-import appbarReducer from './slices/appbar-slice';
+import appbarReducer from './slices/app/appbar-slice';
+import modalFormHandlingReducer from './slices/app/forms-slice';
 
 export const store = configureStore({
-    reducer:{
+    reducer: {
         [apiSlice.reducerPath]: apiSlice.reducer,
         auth: authReducer,
-        appbar: appbarReducer
+        appbar: appbarReducer,
+        modalForm: modalFormHandlingReducer
     },
-    middleware: getDefaultMiddleware => 
+    middleware: getDefaultMiddleware =>
         getDefaultMiddleware().concat(apiSlice.middleware),
     devTools: true
 })

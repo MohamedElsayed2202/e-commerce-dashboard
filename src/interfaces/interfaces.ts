@@ -53,3 +53,12 @@ export interface ErrorResponse {
         data?: any
     }
 }
+
+
+export interface ModalFormHandling {
+    type: string;
+    isOpen: boolean;
+    isEditing: boolean;
+    isValid: boolean;
+    data: any;
+}

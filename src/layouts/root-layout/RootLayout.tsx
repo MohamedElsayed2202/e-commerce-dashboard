@@ -12,7 +12,7 @@ import DarkModeSwapper from "../../components/layout-components/DarkModeSwapper"
 import DrawerToggle from "../../components/layout-components/DrawerToggle";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 import MenuAppbar from "../../components/layout-components/MenuAppbar";
-import { toggleDrawer } from "../../store/slices/appbar-slice";
+import { toggleDrawer } from "../../store/slices/app/appbar-slice";
 
 const drawerWidth = 240;
 

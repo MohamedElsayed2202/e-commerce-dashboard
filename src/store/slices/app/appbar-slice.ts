@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { Appbar } from "../../interfaces/interfaces";
+import { Appbar } from "../../../interfaces/interfaces";
 
 
 

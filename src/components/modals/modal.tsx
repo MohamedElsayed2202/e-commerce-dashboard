@@ -1,20 +1,35 @@
-import { Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material"
-import { Form, useFetcher, useSubmit } from "react-router-dom"
-import { useRef } from 'react'
+import { Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, FormHelperText, InputLabel, MenuItem, Select, Slide, TextField } from "@mui/material"
+
+import {forwardRef} from 'react';
+import UserForm from "../forms/UserForm";
+import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
+import { toggleFormModalOpen } from "../../store/slices/app/forms-slice";
+import { TransitionProps } from "@mui/material/transitions";
+
+
+const Transition = forwardRef(function Transition(
+    props: TransitionProps & {
+      children: React.ReactElement<any, any>;
+    },
+    ref: React.Ref<unknown>,
+  ) {
+    return <Slide direction="up" ref={ref} {...props} />;
+  });
 
 const MyModal = () => {
 
+    const {isOpen} = useAppSelector(state => state.modalForm);
 
-
-    const handelChange = () => {
-
-    }
+    const dispatch = useAppDispatch();
 
     return (
         <Dialog
             fullWidth
-            // maxWidth ={'xs'}
-            open={true}
+            open={isOpen}
+            onClose={()=>{
+                dispatch(toggleFormModalOpen())
+            }}
+            TransitionComponent={Transition}
         >
             <DialogTitle>Add user</DialogTitle>
             <DialogContent>
@@ -26,80 +41,15 @@ const MyModal = () => {
                         width: 'fit-content',
                     }}
                 >
-                    <Form action="add" method="POST" noValidate>
-                        <TextField
-                            margin="normal"
-                            required
-                            fullWidth
-                            name="name"
-                            label="name"
-                            type="text"
-                            id="name"
-                            autoFocus
-                        />
-
-                        <TextField
-                            margin="normal"
-                            required
-                            fullWidth
-                            name="email"
-                            label="email"
-                            type="email"
-                            id="email"
-                        />
-
-                        <TextField
-                            margin="normal"
-                            required
-                            fullWidth
-                            name="password"
-                            label="password"
-                            type="password"
-                            id="password"
-                        />
-
-                        <FormControl fullWidth sx={{
-                            mt: 2,
-                            mb: 1
-                        }}>
-                            <InputLabel htmlFor="role">Role</InputLabel>
-                            <Select
-                                label="role"
-                                required
-                                name="role"
-                                id="role"
-                                value="admin"
-                            >
-                                <MenuItem value="owner">Owner</MenuItem>
-                                <MenuItem value="admin">Admin</MenuItem>
-                                <MenuItem value="user">User</MenuItem>
-                            </Select>
-                        </FormControl>
-
-                        <TextField
-                            margin="normal"
-                            required
-                            fullWidth
-                            name="phone"
-                            label="phone"
-                            type="tel"
-                            id="phone"
-                        />
-                        <Button
-                            type="submit"
-                            variant="contained"
-                            onClick={() => {
-                                console.log(55555);
-                            }}
-                        >
-                            Add
-                        </Button>
-                    </Form>
+                    <UserForm />
                 </Box>
 
             </DialogContent>
             <DialogActions>
                 <Button variant="contained" onClick={() => {
+
+                }}>Save</Button>
+                <Button variant="contained" color="error" onClick={() => {
 
                 }}>Close</Button>
             </DialogActions>
