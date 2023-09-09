@@ -12,7 +12,7 @@ import PathLoader from './components/PathLoader';
 import { Provider } from 'react-redux';
 import { store } from './store/store';
 import { loginAction, logoutAction } from './utils/actions';
-import { usersLoader } from './utils/loaders';
+// import { usersLoader } from './utils/loaders';
 import Users from './pages/users/users';
 
 

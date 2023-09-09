@@ -1,14 +1,15 @@
-import { Box, Button } from "@mui/material"
+import { Box, Button, Typography } from "@mui/material"
 import { useGetUsersQuery } from "../../store/slices/users/user-api-slice"
 import { memo } from "react"
-import MyModal from "../../components/modals/modal";
+import MyModal from "../../components/modals/FormModal";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
-import { toggleFormModalOpen } from "../../store/slices/app/forms-slice";
+import { openModal } from "../../store/slices/app/forms-slice";
+import { type } from "os";
 
 const Users = () => {
     const { data } = useGetUsersQuery();
 
-    const {isOpen} = useAppSelector(state => state.modalForm);
+    const { data: user } = useAppSelector(state => state.modalForm);
 
     const dispatch = useAppDispatch();
 
@@ -31,16 +32,23 @@ const Users = () => {
                         alignItems: 'center',
                     }}
                 >
-                    {/* <h3>No users rather than you!</h3> */}
+                    <Typography variant="h3">
+                        No users created yet!
+                    </Typography>
                     <Button variant="contained">Add User</Button>
                 </Box>
             }
-                <Button variant="contained" onClick={() => {
-                    dispatch(toggleFormModalOpen())
+            {
+                user ? <Button variant="contained" onClick={() => {
+                    dispatch(openModal({type: 'user', isEditing: true}))
+                }}>Edite</Button> : <Button variant="contained" onClick={() => {
+                    dispatch(openModal({type: 'user', isEditing: false}))
                 }}>Add User</Button>
-                
-                <MyModal/>
-            
+            }
+
+
+            <MyModal />
+
         </Box>
     )
 }

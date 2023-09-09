@@ -1,33 +1,33 @@
 import { Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, FormHelperText, InputLabel, MenuItem, Select, Slide, TextField } from "@mui/material"
 
-import {forwardRef} from 'react';
+import { forwardRef, memo } from 'react';
 import UserForm from "../forms/UserForm";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
-import { toggleFormModalOpen } from "../../store/slices/app/forms-slice";
+import { closeModal, openModal } from "../../store/slices/app/forms-slice";
 import { TransitionProps } from "@mui/material/transitions";
 
 
 const Transition = forwardRef(function Transition(
     props: TransitionProps & {
-      children: React.ReactElement<any, any>;
+        children: React.ReactElement<any, any>;
     },
     ref: React.Ref<unknown>,
-  ) {
+) {
     return <Slide direction="up" ref={ref} {...props} />;
-  });
+});
 
 const MyModal = () => {
 
-    const {isOpen} = useAppSelector(state => state.modalForm);
-
+    const { isOpen, data } = useAppSelector(state => state.modalForm);
+    console.log(data);
     const dispatch = useAppDispatch();
 
     return (
         <Dialog
             fullWidth
             open={isOpen}
-            onClose={()=>{
-                dispatch(toggleFormModalOpen())
+            onClose={() => {
+                dispatch(closeModal())
             }}
             TransitionComponent={Transition}
         >
@@ -46,15 +46,19 @@ const MyModal = () => {
 
             </DialogContent>
             <DialogActions>
-                <Button variant="contained" onClick={() => {
+                <Button variant="text" onClick={() => {
 
                 }}>Save</Button>
                 <Button variant="contained" color="error" onClick={() => {
+                    if (data) {
 
+                    } else {
+                        dispatch(closeModal())
+                    }
                 }}>Close</Button>
             </DialogActions>
         </Dialog>
     )
 }
 
-export default MyModal
+export default memo(MyModal)

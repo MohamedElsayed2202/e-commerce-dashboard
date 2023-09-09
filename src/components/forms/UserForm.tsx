@@ -1,9 +1,9 @@
 import * as yup from 'yup';
 import { useFormik } from 'formik';
-import { Button, FormControl, FormHelperText, InputLabel, MenuItem, Select, TextField } from '@mui/material';
-import { memo } from 'react';
+import { FormControl, FormHelperText, InputLabel, MenuItem, Select, TextField } from '@mui/material';
+import { memo, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
-import { setFormData } from '../../store/slices/app/forms-slice';
+import { setFormData, openModal } from '../../store/slices/app/forms-slice';
 
 const getCharacterValidationError = (str: string) => {
     return `Your password must have at least 1 ${str} character`;
@@ -32,13 +32,19 @@ const validationSchema = yup.object({
 
 
 const UserForm = () => {
-    const sub = (val : any)=>{
-        console.log(val);
-        
-    }
 
-    const { values, isValid, errors, touched , initialStatus , handleBlur, handleChange, resetForm, dirty, validateForm } = useFormik({
-        initialValues: {
+    const { data, type, isEditing } = useAppSelector(state => state.modalForm);
+
+    const dispatch = useAppDispatch();
+
+    const { values, isValid, isValidating, errors, touched, handleBlur, handleChange } = useFormik({
+        initialValues: isEditing ? {
+            name: data.name as string,
+            email: data.email as string,
+            password: data.password as string,
+            role: data.role as string,
+            phone: data.phone as string,
+        }: {
             name: '',
             email: '',
             password: '',
@@ -46,37 +52,21 @@ const UserForm = () => {
             phone: '',
         },
         validationSchema: validationSchema,
-        onSubmit: (values) => {sub(values);},
+        onSubmit: (values) => { },
         isInitialValid: false,
-        validateOnChange: false
+        validateOnMount: true,
+
     });
 
-    const {isOpen, data} = useAppSelector(state => state.modalForm);
-
-    const dispatch = useAppDispatch();
-
-    // console.log(initialStatus);
-    
-
-    // console.log(dirty);
-    
-    const isFormValid = async () => {
-        const valus = await validateForm()
-        if( Object.keys(valus).length === 0){
-            console.log(true);
-            
+    useEffect(() => {
+        console.log(555);
+        console.log(isValid);
+        if (isValid && data === undefined) {
+            const data = { ...values }
+            dispatch(setFormData(data));
         }
-    }
 
-    if(isValid && Object.keys(touched).length === 5){
-
-        console.log(5555);
-        // console.log(isFormValid());
-        // isFormValid()
-        
-        // dispatch(setFormData(values));
-    }
-
+    }, [isValid, data, dispatch]);
 
     return (
         <form noValidate>
