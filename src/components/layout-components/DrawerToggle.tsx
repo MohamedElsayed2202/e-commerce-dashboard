@@ -2,7 +2,7 @@ import { IconButton } from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
 import { memo, useCallback } from "react";
-import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
+import { useAppDispatch, useAppSelector } from "../../hooks/store-hooks";
 import { toggleDrawer } from "../../store/slices/app/appbar-slice";
 
 const DrawerToggle = () => {

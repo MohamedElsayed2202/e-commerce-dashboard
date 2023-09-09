@@ -62,3 +62,6 @@ export interface ModalFormHandling {
     isValid: boolean;
     data: any;
 }
+
+
+export interface AllForms {}

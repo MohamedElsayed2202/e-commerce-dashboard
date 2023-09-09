@@ -10,7 +10,7 @@ import NavDrawer from "../../components/layout-components/NavDrawer";
 import CustomeBreadcrumb from "../../components/layout-components/CustomeBreadcrumb";
 import DarkModeSwapper from "../../components/layout-components/DarkModeSwapper";
 import DrawerToggle from "../../components/layout-components/DrawerToggle";
-import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
+import { useAppDispatch, useAppSelector } from "../../hooks/store-hooks";
 import MenuAppbar from "../../components/layout-components/MenuAppbar";
 import { toggleDrawer } from "../../store/slices/app/appbar-slice";
 
@@ -49,7 +49,7 @@ const RootLayout = () => {
                     sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
                     aria-label="mailbox folders"
                 >
-                    <Hidden smUp implementation="js">
+                    {/* <Hidden smUp implementation="js"> */}
                         <Drawer
                             variant="temporary"
                             open={appbar.mobileOpen}
@@ -64,8 +64,8 @@ const RootLayout = () => {
                         >
                             <NavDrawer />
                         </Drawer>
-                    </Hidden>
-                    <Hidden xsDown implementation="js">
+                    {/* </Hidden> */}
+                    {/* <Hidden xsDown implementation="js"> */}
                         <Drawer
                             variant="permanent"
                             sx={{
@@ -76,7 +76,7 @@ const RootLayout = () => {
                         >
                             <NavDrawer />
                         </Drawer>
-                    </Hidden>
+                    {/* </Hidden> */}
                 </Box>
                 <Box
                     component="main"

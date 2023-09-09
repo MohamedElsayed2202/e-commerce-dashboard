@@ -1,10 +1,12 @@
 import { Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, FormHelperText, InputLabel, MenuItem, Select, Slide, TextField } from "@mui/material"
 
-import { forwardRef, memo } from 'react';
+import { ReactElement, forwardRef, memo } from 'react';
 import UserForm from "../forms/UserForm";
-import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
+import { useAppDispatch, useAppSelector } from "../../hooks/store-hooks";
 import { closeModal, openModal } from "../../store/slices/app/forms-slice";
 import { TransitionProps } from "@mui/material/transitions";
+import BrandForm from "../forms/BrandForm";
+import { JsxElement } from "typescript";
 
 
 const Transition = forwardRef(function Transition(
@@ -16,11 +18,29 @@ const Transition = forwardRef(function Transition(
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
+
+
+const formsList = [
+    { name: 'user', form: <UserForm /> },
+    { name: 'brand', form: <BrandForm /> }
+]
+
+const getForm = (type: string): ReactElement => {
+    const form = formsList.filter(form => form.name === type)
+    return form[0].form
+}
+
 const MyModal = () => {
 
-    const { isOpen, data } = useAppSelector(state => state.modalForm);
+    const { isOpen, data, isValid, type } = useAppSelector(state => state.modalForm);
     console.log(data);
+    console.log(type);
     const dispatch = useAppDispatch();
+    let form
+    if (type) {
+        form = getForm(type);
+    }
+
 
     return (
         <Dialog
@@ -34,28 +54,38 @@ const MyModal = () => {
             <DialogTitle>Add user</DialogTitle>
             <DialogContent>
                 <Box
-                    sx={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        m: 'auto',
-                        width: 'fit-content',
-                    }}
+                    // sx={{
+                    //     display: 'flex',
+                    //     flexDirection: 'column',
+                    //     m: 'auto',
+                    //     width: 'fit-content',
+                    // }}
                 >
-                    <UserForm />
+                    {form}
                 </Box>
 
             </DialogContent>
             <DialogActions>
-                <Button variant="text" onClick={() => {
+                <Button
+                    disabled={isValid ? false : true}
+                    variant="contained"
+                    onClick={() => {
 
-                }}>Save</Button>
-                <Button variant="contained" color="error" onClick={() => {
-                    if (data) {
+                    }}>
+                    Save
+                </Button>
+                <Button
+                    variant="text"
+                    color="error"
+                    onClick={() => {
+                        if (data) {
 
-                    } else {
-                        dispatch(closeModal())
-                    }
-                }}>Close</Button>
+                        } else {
+                            dispatch(closeModal())
+                        }
+                    }}>
+                    Close
+                </Button>
             </DialogActions>
         </Dialog>
     )

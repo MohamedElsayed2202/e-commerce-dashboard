@@ -21,15 +21,20 @@ const slice = createSlice({
         setFormData: (state, {payload}: PayloadAction<any>) => {
             state.data = payload
         },
+        setIsValid: (state, {payload}: PayloadAction<void>) => {
+            state.isValid = true
+        },
         closeModal: (state, {payload}: PayloadAction<void>) => {
+            state.type = ""
             state.isOpen = false;
             state.isEditing = false;
-            state.type = ""
+            state.isValid = false;
+            state.data = undefined;
         }
     }
 })
 
- export const { openModal, setFormData, closeModal } = slice.actions
+ export const { openModal, setFormData, closeModal, setIsValid } = slice.actions
 
 const modalFormHandlingReducer = slice.reducer;
 export default modalFormHandlingReducer;
