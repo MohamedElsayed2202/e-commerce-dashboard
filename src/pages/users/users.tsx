@@ -4,12 +4,12 @@ import { memo } from "react"
 import MyModal from "../../components/modals/FormModal";
 import { useAppDispatch, useAppSelector } from "../../hooks/store-hooks";
 import { openModal } from "../../store/slices/app/forms-slice";
-import { type } from "os";
 
 const Users = () => {
     const { data } = useGetUsersQuery();
+    console.log(data);
 
-    const { data: user } = useAppSelector(state => state.modalForm);
+    // const { data: user } = useAppSelector(state => state.modalForm);
 
     const dispatch = useAppDispatch();
 
@@ -21,31 +21,37 @@ const Users = () => {
 
             }}
         >
-
-            {data && data.length === 0 &&
-                <Box
-                    component="h3"
-                    sx={{
-                        display: 'flex',
-                        justifyContent: 'center',
-                        flexDirection: 'column',
-                        alignItems: 'center',
-                    }}
-                >
-                    <Typography variant="h3">
+            <Box
+                sx={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                }}
+            >
+                {data && data.length === 0 ?
+                    <><Typography variant="h3">
                         No users created yet!
-                    </Typography>
-                    <Button variant="contained">Add User</Button>
-                </Box>
-            }
-            {
-                user ? <Button variant="contained" onClick={() => {
-                    dispatch(openModal({type: 'user', isEditing: true}))
-                }}>Edite</Button> : <Button variant="contained" onClick={() => {
-                    dispatch(openModal({type: 'brand', isEditing: false}))
-                }}>Add User</Button>
-            }
+                    </Typography><Button variant="contained"
+                        sx={{
+                            mt: 1
+                        }}
+                        onClick={() => {
+                            dispatch(openModal({ type: 'user', isEditing: false }));
+                        }}
+                    >
+                            Add User
+                        </Button></>
+                    : <Box>
+                        <Typography>
+                            {JSON.stringify(data)}
+                        </Typography>
 
+                        <Button variant="contained" onClick={() => {
+                            dispatch(openModal({ type: 'user', isEditing: false }))
+                        }}>Add User</Button>
+                    </Box>}
+            </Box>
 
             <MyModal />
 

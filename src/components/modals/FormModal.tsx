@@ -1,12 +1,12 @@
-import { Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, FormHelperText, InputLabel, MenuItem, Select, Slide, TextField } from "@mui/material"
+import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Slide } from "@mui/material"
 
-import { ReactElement, forwardRef, memo } from 'react';
+import { ReactElement, forwardRef, memo, useCallback } from 'react';
 import UserForm from "../forms/UserForm";
 import { useAppDispatch, useAppSelector } from "../../hooks/store-hooks";
-import { closeModal, openModal } from "../../store/slices/app/forms-slice";
+import { closeModal } from "../../store/slices/app/forms-slice";
 import { TransitionProps } from "@mui/material/transitions";
 import BrandForm from "../forms/BrandForm";
-import { JsxElement } from "typescript";
+import { useSubmit } from "react-router-dom";
 
 
 const Transition = forwardRef(function Transition(
@@ -31,16 +31,17 @@ const getForm = (type: string): ReactElement => {
 }
 
 const MyModal = () => {
-
+    const submit = useSubmit();
     const { isOpen, data, isValid, type } = useAppSelector(state => state.modalForm);
-    console.log(data);
-    console.log(type);
     const dispatch = useAppDispatch();
     let form
     if (type) {
         form = getForm(type);
     }
 
+    const add = useCallback(()=>{    
+        submit(data, { method: 'POST'});
+    }, [data, submit])
 
     return (
         <Dialog
@@ -69,9 +70,7 @@ const MyModal = () => {
                 <Button
                     disabled={isValid ? false : true}
                     variant="contained"
-                    onClick={() => {
-
-                    }}>
+                    onClick={add}>
                     Save
                 </Button>
                 <Button

@@ -13,8 +13,10 @@ export interface Account{
 }
 
 export interface User{
+    _id: string;
     name: string;
     email: string;
+    role: string;
     profile: {
         phone: string;
         image:{
@@ -37,6 +39,19 @@ export interface LoginInputError{
     message: string,
 }
 
+export interface AddUserRequest{
+    name: string;
+    email: string;
+    password: string;
+    role: string;
+    phone: string;
+}
+
+export interface AddUserResponse{
+    message: string;
+    user: User;
+}
+
 export interface Auth{
     user: Account | null;
     token: string | null | undefined;
@@ -50,7 +65,7 @@ export interface ErrorResponse {
     status: number | any;
     data: {
         message: string,
-        data?: any
+        errors?: any
     }
 }
 

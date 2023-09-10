@@ -11,8 +11,8 @@ import ThemeContextProvider from './contexts/theme-context';
 import PathLoader from './components/PathLoader';
 import { Provider } from 'react-redux';
 import { store } from './store/store';
-import { loginAction, logoutAction } from './utils/actions';
-// import { usersLoader } from './utils/loaders';
+import { loginAction, logoutAction, userActions } from './utils/actions';
+import { indexLoader, usersLoader } from './utils/loaders';
 import Users from './pages/users/users';
 
 
@@ -20,7 +20,7 @@ const router = createBrowserRouter([
   {
     path: '/',
     element: <PathLoader><RootLayout /></PathLoader>,
-    // loader: indexLoader,
+    loader: indexLoader,
     children: [
       {
         path: 'register',
@@ -30,24 +30,8 @@ const router = createBrowserRouter([
       {
         path: 'users',
         element: <Users />,
-        // loader: usersLoader,
-        // children: [
-        //   {path: 'add', action: async({request, params}) => {
-        //     const formdata = await request.formData();
-        //     console.log(formdata.get('name'));
-            
-        //     return null
-        //   }}
-        // ]
-        // loader: async () => {
-        //   // NProgress.start();
-        //   const fakeapicall = new Promise((resolve, reject) => {
-        //     setTimeout(resolve, 5000)
-        //   });
-        //   await fakeapicall
-        //   // NProgress.done()
-        //   return null
-        // } 
+        loader: usersLoader,
+        action: userActions, 
       },
     ]
   },

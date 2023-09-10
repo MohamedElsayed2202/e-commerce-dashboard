@@ -2,6 +2,7 @@ import { BaseQueryApi, FetchArgs, FetchBaseQueryError, FetchBaseQueryMeta, creat
 import { RootState } from '../store';
 import { logout, setCredentials } from '../slices/auth/auth-slice';
 import { QueryReturnValue } from '@reduxjs/toolkit/dist/query/baseQueryTypes';
+import { redirect } from 'react-router-dom';
 
 
 const baseQuery = fetchBaseQuery({
@@ -20,7 +21,7 @@ const baseQuery = fetchBaseQuery({
  
 const baseQueryWithReauth = async (args: string | FetchArgs, api: BaseQueryApi, extraOptions: {}): Promise<QueryReturnValue<unknown, FetchBaseQueryError, FetchBaseQueryMeta>> =>{
     let result = await baseQuery(args, api, extraOptions);
-    if(result.error?.status === 403){
+    if(result.error?.status === 403 && (result.error.data as any).message){
         const refreshTokenResult = await baseQuery({
             url: 'auth/refresh',
             method: 'POST',
@@ -30,7 +31,10 @@ const baseQueryWithReauth = async (args: string | FetchArgs, api: BaseQueryApi, 
             api.dispatch(setCredentials({token}));
             result = await baseQuery(args, api, extraOptions);
         }else{
-            api.dispatch(logout())
+            console.log(refreshTokenResult.error?.data);
+            
+            // api.dispatch(logout())
+            // redirect('/auth');
         }
     }
     return result;
@@ -40,6 +44,6 @@ const baseQueryWithReauth = async (args: string | FetchArgs, api: BaseQueryApi, 
 export const apiSlice = createApi({
     reducerPath: 'api',
     baseQuery: baseQueryWithReauth,
-    tagTypes : ['Auth', 'User', 'Product', 'Brand', 'Category','Order'],
+    tagTypes : ['Auth', 'Users', 'Products', 'Brands', 'Categories','Orders'],
     endpoints : builder => ({})
 });
