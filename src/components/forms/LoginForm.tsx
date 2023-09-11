@@ -109,7 +109,7 @@ const LoginForm = () => {
                         mt: 1
                     }}>
                         <Grid item xs>
-                            <Link to={"register"} className={classes.navlink}>
+                            <Link to={"http://localhost:8080/google"} className={classes.navlink}>
                                 Forget password?
                             </Link>
                         </Grid>

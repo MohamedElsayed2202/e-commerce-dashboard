@@ -33,8 +33,8 @@ const baseQueryWithReauth = async (args: string | FetchArgs, api: BaseQueryApi, 
         }else{
             console.log(refreshTokenResult.error?.data);
             
-            // api.dispatch(logout())
-            // redirect('/auth');
+            api.dispatch(logout())
+            redirect('/auth');
         }
     }
     return result;
